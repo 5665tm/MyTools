@@ -1,0 +1,199 @@
+﻿set nocompatible
+"map ' <Plug>(expand_region_expand)
+inoremap <c-l> <right>
+inoremap <c-k> <up>
+inoremap <c-j> <down>
+inoremap <c-h> <left>
+filetype on
+call pathogen#infect()
+filetype plugin indent on
+filetype plugin on
+" allow backspacing over everything in insert mode
+set backspace=indent,eol,start
+set nobackup		" DON'T keep a backup file
+set noswapfile				
+set history=50		" keep 50 lines of command line history
+set ruler			" show the cursor position all the time
+set showcmd			" display incomplete commands
+set tabstop=4
+"set langmap=йцукенгщзфывапролдячсмитьЙЦУКЕНГШЩЗФЫВАПРОЛДЯЧСМИТЬ;qwertyuopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM
+set encoding=utf-8
+set fileencodings=utf-8,cp1251  " список предполагаемых кодировок, в порядке предпочтения
+set number "  line numbers
+set cindent
+set autoindent
+set mouse=a				" use mouse in xterm to scroll
+set ignorecase		" ignore case
+set smartcase			" but don't ignore it, when search string contains uppercase letters
+set hid 				" allow switching buffers, which have unsaved changes
+set shiftwidth=4		" 4 characters for indenting
+set showmatch			" showmatch: Show the matching bracket for the last ')'?
+set nowrap				" don't wrap by default
+syn on
+set completeopt=menuone,preview
+set completeopt-=longest
+set confirm
+nmap L $
+vmap L $
+nmap dL d$
+nmap cL c$
+nmap H ^
+vmap H ^
+nmap dH d^
+nmap cH c^
+set list				"отображение скрытых символов
+set listchars=tab:\|\ 	"тип скрытых символов
+set guifont=consolas:h12 "шрифт. ниже строка чиним раскладку
+"imap <F5> <esc>:Open C:\Program Files\Vim\vim74\bundle\shell\csc.ahk<cr>
+"nmap <F5> :Open C:\Program Files\Vim\vim74\bundle\shell\csc.ahk<cr>
+set keymap=russian-jcukenwin
+set iminsert=0
+set imsearch=0
+highlight lCursor guifg=NONE guibg=Cyan
+nmap <F9> :v/imhonet.ru\/person/d<cr>:%s/.*">//g<cr>:%s/<.*//g<cr>
+set guioptions-=m	"нахрен меню
+set guioptions-=T	"нахрен тулбар
+set guioptions-=r	"нахрен полосу прокрутки
+set guioptions-=L	"нахрен полосу прокрутки
+" автозавершение скобок
+set shortmess+=I	"отрубаем сплешскрин
+set incsearch		" поиск по мере набора
+set hlsearch		"подсветка результатов поиска
+set scrolloff=9999	"курсор всегда посередине
+set mousehide		"скрыть указатель мыши
+set statusline=%<%f%h%m%r\ %b\ %{&encoding}\ 0x\ \ %l,%c%V\ %P
+"листание пробелом
+nmap <Space> <PageDown>
+"nmap L a <Esc>R<C-Y><Esc>
+"сохранение по F2 и F3
+nmap <F3> :x<cr>
+nmap <F2> :w<cr>
+vmap <F3> <esc>:x<cr>i
+vmap <F2> <esc>:w<cr>i
+imap <F3> <esc>:x<cr>
+imap <F2> <esc>:w<cr>
+set iskeyword=@,48-57,_,192-255	"русские слова
+"map <silent><F3> :NEXTCOLOR<cr>
+colorscheme colorer
+"map <silent><F4> :PREVCOLOR<cr>
+set guicursor+=n-v-c:blinkon0 "отключить мигание курсора
+set smartindent		"умные отс
+"подсветка слова под курсором и его же по тексту
+autocmd CursorMoved * silent! exe printf("match Search /\\<%s\\>/", expand('<cword>'))
+autocmd CursorMovedI * silent! exe printf("match Search /\\<%s\\>/", expand('<cword>'))
+"set updatetime=80	"время обновления окна
+"set foldenable		"включить фолдинг
+"set fdm=indent		"фолдинг по отступам
+"set foldopen=all	"автораскрытие
+"set foldclose=all	"автозакрытие
+"set foldnestmax=3	"глубина фолдинга
+"set foldlevel=1		"открывать до уровня...
+set guioptions-=e	"текстовые табы
+" F12 - обозреватель файлов (:Ex для стандартного обозревателя,
+" плагин NERDTree - дерево каталогов)
+map <F12> :NERDTreeToggle<cr>
+vmap <F12> <esc>:NERDTreeToggle<cr>i
+imap <F12> <esc>:NERDTreeToggle<cr>i
+"" Переключение табов (вкладок) (rxvt-style)
+nmap <S-left> :vsplit<cr>
+nmap <S-right> <c-w>w
+nmap <S-up> :badd new<cr>
+nmap <S-down> :bd<cr>
+imap <S-up> <ESC>:badd new<cr>i
+imap <S-up> <ESC>:bd<cr>i
+nmap gt :bn<cr>
+"set cursorline	"подсветка текущей строки
+"set cursorcolumn	"подсветка столбца
+"let dayBegin = 7
+"let dayScheme = "github"
+"let nightBegin = 19
+"let nightScheme = "twilight"
+"let currentTime = str2nr(strftime("%H"))
+
+"if currentTime < nightBegin && currentTime < dayBegin
+    "silent execute "colorscheme " . nightScheme
+"elseif currentTime > nightBegin && currentTime > dayBegin
+    "silent execute "colorscheme " . nightScheme
+"else
+    "silent execute "colorscheme " . dayScheme
+"endif
+set laststatus=2
+set colorcolumn=81 "подсветка дальних столбцов
+"set columns=84 "ширина при запуске
+let g:airline_left_sep = ''
+let g:airline_right_sep = ''
+let g:airline_linecolumn_prefix = ''
+let g:airline_paste_symbol = ''
+let g:airline_enable_branch = ''
+let g:airline_theme='wombat'
+"заебал пиликать сука блять нахуй!
+set noerrorbells visualbell t_vb=
+autocmd GUIEnter * set visualbell t_vb=
+let g:airline_enable_bufferline=0 "отключить кривую поддержку bufferline
+let g:airline_detect_whitespace=0 "отключить уведеомления о ошибках airline
+let g:bufferline_rotate = 3
+map <C-c> :e ftp://wm26571@213.155.29.178/public_html/<cr>Ax56rtfm<cr>
+"let g:SexyScroller_EasingStyle = 0	"yeeah baby!
+"let g:SexyScroller_MaxTime = 0 " настройки скроллинга
+"let g:SexyScroller_CursorTime = 0 
+let g:SexyScroller_Enabled = 0
+"подсветка отступов (юзерские параметры и автозапуск)
+"let g:indent_guides_auto_colors = 0
+"let g:indent_guides_enable_on_vim_startup=1
+"комментирование Nerd Comment
+vmap <s-m> <leader>c 
+nmap <s-m> <leader>c 
+set helplang=en,ru "помощь сразу на рус. потом на енг
+set hidden "не выгружать буфер при переключении
+
+
+
+"перемещать курсор на предыдущую позицию при открытии файла
+let s:us_goto_last_pos=1
+if s:us_goto_last_pos
+	autocmd BufReadPost * call SetCursorPosition()
+endif
+function! SetCursorPosition()
+	if &filetype !~ 'svn\|commit\c'
+		if line("'\"") > 0 && line("'\"") <= line("$")
+			exe "normal! g`\""
+			normal! zz
+		endif
+	end
+endfunction
+"let g:tagbar_ctags_bin='$VIMRUNTIME\bundle\ctags58\ctags.exe'
+nmap <F8> :TagbarToggle<CR>
+let g:tagbar_sort = 0 "отключить сортировку по алфавиту
+let g:tagbar_singleclick = 1 "открытие одним щелчком
+let g:airline_enable_tagbar=0 "отключить интеграцию с airline
+let g:tagbar_updateonsave_maxlines=1 "перерисовка при сохранении
+imap <F4> <esc><c-y>,a
+vmap <F4> <c-y>,
+nmap <F4> <c-y>,
+let g:SuperTabContextDefaultCompletionType = "<c-n>" "листаем по порядку
+let g:SuperTabDefaultCompletionType = "context" "по контексту
+"if version >= 700
+"   По умолчанию проверка орфографии выключена.
+    "setlocal spell spelllang=
+    "setlocal nospell
+    "function ChangeSpellLang()
+        "if &spelllang =~ "en_us"
+            "setlocal spell spelllang=ru
+            "echo "spelllang: ru"
+        "elseif &spelllang =~ "ru"
+            "setlocal spell spelllang=
+            "setlocal nospell
+            "echo "spelllang: off"
+        "else
+            "setlocal spell spelllang=en_us
+            "echo "spelllang: en"
+        "endif
+    "endfunc
+
+	"проверка орфографии
+    "map <F4> <Esc>:call ChangeSpellLang()<CR>
+"endif
+let g:slime_target = "screen"
+"let g:slime_target = "tmux"
+"let g:slime_target = "whimrepl"
+inoremap <C-o> . 
