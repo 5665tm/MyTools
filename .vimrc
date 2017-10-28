@@ -1,37 +1,41 @@
-﻿"set novsvim_useeditorindent
-vsvim_useeditortab
-set novsvim_controlchars
-set autoindent
+﻿" set novsvim_useeditorindent
+" vsvim_useeditortab
+" set novsvim_controlchars
+" set autoindent
+set noerrorbells
+set novisualbell
 set clipboard=unnamed
-set so=5
+set so=15
 set vsvim_useeditordefaults
+:set ignorecase
 
 
-nnoremap <S-q> :
 
-noremap <Tab> :vsc Edit.IncreaseLineIndent<CR>
-vnoremap <Tab> :vsc Edit.IncreaseLineIndent<CR>kw
+nnoremap <Tab> :vsc Edit.IncreaseLineIndent<CR>
+vnoremap <Tab> :vsc Edit.IncreaseLineIndent<CR><ESC><ESC>
 
-" ----- HEHEHEHE
-nnoremap <C-v> iFUCK
-nnoremap <S-v> iFUCK
+noremap <ESC> <ESC><ESC><ESC><ESC>
+
+nnoremap <CR> G
+
+cnoremap <Space> <CR>
+nnoremap <Space> n
 
 " ---------- NORMAL-TOP
 
 nnoremap q :vsc Edit.DecreaseLineIndent<CR>
-vnoremap q :vsc Edit.DecreaseLineIndent<CR>kw
+vnoremap q :vsc Edit.DecreaseLineIndent<CR><ESC><ESC>kw
 
-nnoremap w b
-vnoremap w b
+nnoremap w :vsc ReSharper.ReSharper_ExtendSelection<CR>
+vnoremap w :vsc ReSharper.ReSharper_ExtendSelection<CR>
 
-nnoremap e w
-vnoremap e w
+nnoremap e a
+vnoremap e a
 
-nnoremap r dd
-vnoremap r dd
+nnoremap r s
+vnoremap r s
 
-nnoremap t yy
-vnoremap t yy
+nnoremap t ciw
 
 nnoremap y :vsc Edit.Redo<CR>
 
@@ -45,11 +49,19 @@ vnoremap ] G
 
 " ---------- NORMAL-MIDLE
 
-nnoremap d ciw
+nnoremap a :vsc ReSharper.ReSharper_GotoFileMember<CR>
 
-nnoremap f S
+nnoremap s :vsc ReSharper.ReSharper_GotoFile<CR>
 
-nnoremap g J
+nnoremap d ?
+vnoremap s ?
+
+nnoremap f /
+vnoremap f /
+
+nnoremap g N
+vnoremap g N
+
 
 nnoremap ; I
 
@@ -57,7 +69,9 @@ nnoremap ' A
 
 " ---------- NORMAL-BOTTOM
 
-nnoremap z r
+nnoremap z dd
+
+vnoremap x x<ESC><ESC>
 
 nnoremap c V
 
@@ -81,15 +95,12 @@ nnoremap <M-u> @q
 
 nnoremap <S-y> :vsc ReSharper.ReSharper_GotoNextHighlight<CR>
 
-nnoremap <S-u> :vsc ReSharper.ReSharper_GotoFile<CR>
+nnoremap <S-u> J
 
-nnoremap <S-i> :vsc ReSharper.ReSharper_LineComment<CR>k^w
-vnoremap <S-i> :vsc ReSharper.ReSharper_LineComment<CR>kw
+nnoremap <S-i> :vsc ReSharper.ReSharper_LineComment<CR><ESC><ESC>
+vnoremap <S-i> :vsc ReSharper.ReSharper_LineComment<CR><ESC><ESC>kw
 
-nnoremap { :vsc ReSharper.ReSharper_MoveDown<CR>
-vnoremap { :vsc ReSharper.ReSharper_MoveDown<CR>
-nnoremap } :vsc ReSharper.ReSharper_MoveUp<CR>
-vnoremap } :vsc ReSharper.ReSharper_MoveUp<CR>
+
 
 
 " ---------- SHIFT-MIDLE
@@ -104,21 +115,20 @@ vnoremap <S-k> :vsc ReSharper.ReSharper_GotoPrevMethod<CR>
 
 nnoremap <S-l> :vsc ReSharper.ReSharper_GotoUsage<CR>
 
-nnoremap : :vsc ReSharper.ReSharper_FindUsages<CR>
-
-nnoremap " :vsc ReSharper.ReSharper_GotoFileMember<CR>
+nnoremap : :vsc Edit.SwitchtoQuickReplace<CR>
+vnoremap : :vsc Edit.SwitchtoQuickReplace<CR>
 
 " ---------- SHIFT-BOTTOM
 
-nnoremap <S-n> :vsc Edit.CollapsetoDefinitions<CR>
+nnoremap <S-n> :vsc ReSharper.ReSharper_Generate<CR>
+vnoremap <S-n> :vsc ReSharper.ReSharper_Generate<CR>
 
-nnoremap <S-m> :vsc Edit.ToggleAllOutlining<CR>
+nnoremap <S-m> :vsc ReSharper.ReSharper_RefactorThis<CR>
+vnoremap <S-m> :vsc ReSharper.ReSharper_RefactorThis<CR>
 
-nnoremap < :vsc ReSharper.ReSharper_Rename<CR>
+
+nnoremap < :vsc File.SaveAll<CR>
+nnoremap > :vsc ReSharper.ReSharper_SilentCleanupCode<CR>
 
 
 "-------------------------------------
-
-
-
-execute ":vsc HideShowComments.HideDocumentationComments"

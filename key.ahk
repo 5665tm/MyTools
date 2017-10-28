@@ -1,149 +1,266 @@
-﻿; Переключение раскладки по Капс Лок
-SetBatchLines, -1
-SetKeyDelay, 0
+﻿SetBatchLines, -1
+SetKeyDelay, 20, 40
 classname = ""
-Locale1=0x4090409  ; Английский (американский).
-Locale2=0x4190419  ; Русский.
 SetTitleMatchMode 2
+CoordMode, Mouse, Window
+SetDefaultMouseSpeed, 2
+
+
+showingTaskSwitcher:=0	; not visible
+
+;-----------------------------
+
+#NoEnv
+Process, Priority, ,High
+#SingleInstance Force
+
+;-----------------------------
+
+
+
+; запоминает очередь открытых окон
+loop 
+{	
+	WinGetClass, m, A
+	ifu := regexmatch(m, "MultitaskingViewFrame")
+	mfu := m == ""
+	WinGet, current_ID, ID, A
+	
+	WinWaitNotActive, ahk_id %current_ID%
+	;TrayTip, Title, %m% %ifu% %mfu% %current_ID%, 1, 1
+	if (ifu < 1)
+	{ 	
+		if(mfu < 1)
+		{
+			previous_ID := current_ID
+		}
+	}
+}
+
 
 *CapsLock::
 {
-	WinGetTitle, wintit, a
-	ifvim := regexmatch(wintit, "VIM")
-	if (ifvim > 0)
-	{
-		SendInput {ctrl down}6{ctrl up}
-	}
-	else
-	{
-		SendInput {LAlt Down}{Shift Down}{Shift Up}{LAlt Up}
-	} 
+	SendInput {LAlt Down}{Shift Down}{Shift Up}{LAlt Up}
 	return
 }
+
+
 ;*****************************************************
 ; Доработка раскладки
 ;*****************************************************
-SC56 Down::SendInput {LAlt Down} ;
-SC56 Up::SendInput {LAlt Up} ;
+
 +SC35::SendInput,,{Space} ;запятая с пробелом Shift + .
-SC35::SendInput,.{Space} ;
-+SC56::SendInput  {!}{Space} ;восклицательный знак с пробелом Shift + нижний слеш
->!SC56::SendInput {?}{Space} ;вопросительный знак с пробелом RAlt + нижний слеш
->!SC10::SendInput {Raw}\ ; RAlt+Q = \
->!SC11::SendInput {Raw}/ ; RAlt+W = |
->!SC12::SendInput {{}{}}{Left} ; RAlt+E =
->!SC13::SendInput  {{}{}}{Left}{Enter}{Enter}{Up}{Tab} ; RAlt+R = }
->!SC22::SendInput {;}{Enter} ; RAlt+T = №
->!SC1E::SendInput ""{Left}
->!SC1F::SendInput (){Left} ; RAlt+S = (
->!SC20::SendInput {Raw}) ; RAlt+D = )
->!SC21::SendInput {Raw}; ; RAlt+F = ;
->!SC14::SendInput {Raw}: ; RAlt+G = :
->!SC2C::SendInput {Raw}< ; RAlt+Z = <
->!SC2D::SendInput {Raw}> ; RAlt+X = >
->!SC2E::SendInput []{Left} ; RAlt+C =  =)
->!SC2F::SendInput {Raw}] ; RAlt+V =  =3
->!SC30::SendInput ...{Space} ; RAlt+B =  =D
-+sc2::SendInput  {!}{Space} ; два ебанутых костыля
-+sc3::SendInput  {@} ; два ебанутых костыля
-+sc4::SendInput  {#} ; два ебанутых костыля
-+sc5::SendInput  {&} ; два ебанутых костыля
-+sc8::SendInput  {?}{Space} ; два ебанутых костыля
+SC35::SendInput,.{Space} ; точка с пробелом
+
+RAlt & SC10::SendInput {Raw}\ ;
+RAlt & SC11::SendInput {Raw}/ ;
+RAlt & SC12::SendInput {{}{}}{Left} ;
+RAlt & SC13::SendInput  {{}{Enter} ;
+RAlt & SC14::SendInput {Raw}: ;
+
+RAlt & SC1E::SendInput ""{Left}
+RAlt & SC1F::SendInput (){Left} ;
+RAlt & SC20::SendInput {Raw}) ;
+RAlt & SC21::SendInput {Raw};
+RAlt & SC22::SendInput {;}{Enter} ;
+
+RAlt & SC2C::SendInput {Raw}< ;
+RAlt & SC2D::SendInput {Raw}> ;
+RAlt & SC2E::SendInput []{Left} ;
+RAlt & SC2F::SendInput {Raw}] ;
+
+
++sc2::SendInput  {!}{Space} ;
++sc3::SendInput  {@} ;
++sc4::SendInput  {#} ;
++sc5::SendInput  {&} ;
++sc8::SendInput  {?}{Space} ;
 +scA::SendInput  {Raw}$
-sc15c::SendInput  {Raw}.
-sc29::SendInput {Esc}
-#SC2C::Run explorer.exe D:\Desktop
-; sc1b::
-; {
-	; SetFormat, Integer, H
-	; WinGet, WinID,, A
-	; ThreadID:=DllCall("GetWindowThreadProcessId", "Int", WinID, "Int", "0")
-	; InputLocaleID:=DllCall("GetKeyboardLayout", "Int", ThreadID)
-	; if(InputLocaleID=Locale1)
-		; SendInput {Raw}÷
-	; else if(InputLocaleID=Locale2)
-		; SendInput ъ
-	; return
-; }
 
-$F6::
+Alt & SC39::AltTab
+
+*+CapsLock::
 {
-	WinGetTitle, wintit, a
-	ifu := regexmatch(wintit, "Unity")
-	if (ifu > 0)
-	{
-		WinActivate, Visual Studio
-		Sleep, 100
-		SendInput {Shift Down}{F5}{Shift Up}
-	}
+	SendInput {CapsLock}
+	return
+}
+
+MouseToCenterWindow()
+{
+	CoordMode, Mouse, Window
+	Sleep, 80
+	WinID := WinExist("A")
+	LastActiveWin = %WinID%
+	WinGetActiveStats, AWTitle, AWWidth, AWHeight, AWX, AWY
+	MPosX := (AWWidth//2)
+	MPosY := (AWHeight//2)
+	MouseMove, %MPosX%, %MPosY%
+	return
+}
+
+SC4A::
+{
+	Send ~
+	return
+}
+
+; открывает превью с окнами
+*SC29::
+{
+	SendInput #{Tab}
+	return
+}
+
+; sc135 - num/
+SC135 & WheelUp::SendInput {Volume_Up 2}
+SC135 & WheelDown::SendInput {Volume_Down 2}
+
+SC135 & LButton::
+{
+	ToLeft()`
+	return
+}
+
+SC135 & RButton::
+{
+	ToRight()
+	return
+}
+
+ToLeft()
+{
+	ActivateWindowUnderMouse()
+	SendInput #+{Left}
+	MouseToCenterWindow()
+	WinMaximize, A
+	return
+}
+
+ToRight()
+{
+	ActivateWindowUnderMouse()
+	SendInput #+{Right}
+	MouseToCenterWindow()
+	WinMaximize, A
+	return
+}
+
+ActivateWindowUnderMouse()
+{
+	MouseGetPos,,, WinUMID
+	WinActivate, ahk_id %WinUMID%
+	return
+}
+
+; распахивает-возвращает окно
+#+SC2::
+{
+	ActivateWindowUnderMouse()
+	MouseToCenterWindow()
+	;распахнуть/вернуть окно
+	if (WinActive("ahk_class Progman") || WinActive("ahk_Class DV2ControlHost") || (WinActive("Start") && WinActive("ahk_class Button")) || WinActive("ahk_class Shell_TrayWnd")) ; disallows minimizing things that shouldn't be minimized, like the task bar and desktop
+		return
+	WinGet, MinMax, MinMax, A
+	If (MinMax = 1)
+		WinRestore, A
 	else
-	{
-		ifv := regexmatch(wintit, "Visual Studio")
-		if (ifv > 0)
-		{
-			WinActivate, Visual Studio
-			Sleep, 100
-			SendInput {Shift Down}{F5}{Shift Up}
-		}
+		WinMaximize, A
+	return
+}
+
+; закрывает окно
+#+SC3::
+{
+	ActivateWindowUnderMouse()
+	WinClose, A
+	return
+}
+
+; возвращает последнее открое окно по аналогии с альт-таб
+;SC135::
+;{
+;	WinActivate ahk_id %previous_ID%
+;	MouseToCenterWindow()
+;}
+
+SC135::
+{
+	CoordMode, Mouse, Screen
+	MouseGetPos, XPos, YPos
 	
-		else
-		{
-			SendInput {F6}
-		}
+	if(XPos < 0)
+	{
+		MouseMove, 900, 500, 5
+	}
+	else
+	{
+		MouseMove, -900, 500, 5
 	}
 	return
 }
 
-$MButton::
-{
-	WinGetTitle, wintit, a
-	ifu := regexmatch(wintit, "Ableton")
-	mfu := regexmatch(wintit, "Unity")
-	if (ifu > 0)
-	{
-		SendInput {Ctrl down}{LAlt down}{LButton down}
-		KeyWait MButton
-		SendInput {Ctrl up}{LAlt up}{LButton up}
-	}
-	else if (mfu > 0)
-	{
-		SendInput {Ctrl down}{LAlt down}{LButton down}
-		KeyWait MButton
-		SendInput {Ctrl up}{LAlt up}{LButton up}
-	}
-	else
-	{
-		SendInput {MButton}
-	}
-	return
-}
 
-$WheelUp::
-{
-	WinGetTitle, wintit, a
-	ifu := regexmatch(wintit, "Ableton")
-	if (ifu > 0)
-	{
-		SendInput {+}
-	}
-	else
-	{
-		SendInput {WheelUp}
-	}
-	return
-}
 
-$WheelDown::
-{
-	WinGetTitle, wintit, a
-	ifu := regexmatch(wintit, "Ableton")
-	if (ifu > 0)
-	{
-		SendInput {-}
-	}
-	else
-	{
-		SendInput {WheelDown}
-	}
-	return
-}
+
+
+
+
+;------------------------------------------------------------------
+;------------------------------------------------------------------
+;------------------------------------------------------------------
+
+
+
+
+
+
+
+
+;$MButton::
+;{
+;	WinGetTitle, wintit, a
+;	ifu := regexmatch(wintit, " - Ableton Live 9 Suite")
+;	if (ifu > 0)
+;	{Z
+;		SendInput {Ctrl down}{LAlt down}{LButton down}
+;		KeyWait MButton
+;		SendInput {Ctrl up}{LAlt up}{LButton up}
+;	}
+;	else
+;	{
+;		SendInput {MButton down}
+;		KeyWait MButton
+;		SendInput {MButton up}
+;	}
+;	return
+;}
+;
+;$WheelUp::
+;{
+;	WinGetTitle, wintit, a
+;	ifu := regexmatch(wintit, " - Ableton Live 9 Suite")
+;	if (ifu > 0)
+;	{
+;		SendInput {+}
+;	}
+;	else
+;	{
+;		SendInput {WheelUp}
+;	}
+;	return
+;}
+;
+;$WheelDown::
+;{
+;	WinGetTitle, wintit, a
+;	ifu := regexmatch(wintit, " - Ableton Live 9 Suite")
+;	if (ifu > 0)
+;	{
+;		SendInput {-}
+;	}
+;	else
+;	{
+;		SendInput {WheelDown}
+;	}
+;	return
+;}
