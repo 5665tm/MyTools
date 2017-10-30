@@ -52,22 +52,22 @@ loop
 +SC35::SendInput,,{Space} ;запятая с пробелом Shift + .
 SC35::SendInput,.{Space} ; точка с пробелом
 
-RAlt & SC10::SendInput {Raw}\ ;
-RAlt & SC11::SendInput {Raw}/ ;
-RAlt & SC12::SendInput {{}{}}{Left} ;
-RAlt & SC13::SendInput  {{}{Enter} ;
-RAlt & SC14::SendInput {Raw}: ;
+RAlt & SC10::SendInput {Raw}\
+RAlt & SC11::SendInput {Raw}/
+RAlt & SC12::SendInput {{} ;
+RAlt & SC13::SendInput  {}} ;
+RAlt & SC14::SendInput {Raw}:
 
-RAlt & SC1E::SendInput ""{Left}
-RAlt & SC1F::SendInput (){Left} ;
-RAlt & SC20::SendInput {Raw}) ;
+RAlt & SC1E::SendInput "
+RAlt & SC1F::SendInput {Raw}(
+RAlt & SC20::SendInput {Raw})
 RAlt & SC21::SendInput {Raw};
 RAlt & SC22::SendInput {;}{Enter} ;
 
-RAlt & SC2C::SendInput {Raw}< ;
-RAlt & SC2D::SendInput {Raw}> ;
-RAlt & SC2E::SendInput []{Left} ;
-RAlt & SC2F::SendInput {Raw}] ;
+RAlt & SC2C::SendInput {Raw}<
+RAlt & SC2D::SendInput {Raw}>
+RAlt & SC2E::SendInput {Raw}[
+RAlt & SC2F::SendInput {Raw}]
 
 
 +sc2::SendInput  {!}{Space} ;
