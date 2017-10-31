@@ -201,7 +201,7 @@ SC135::
 
 
 
-
+Shift & CapsLock:: AltTab
 
 
 
