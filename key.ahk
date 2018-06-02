@@ -1,37 +1,67 @@
-﻿SetBatchLines, -1
+﻿RunAs, Administrator
+SetBatchLines, -1
 SetKeyDelay, 20, 40
 classname = ""
 SetTitleMatchMode 2
 CoordMode, Mouse, Window
 SetDefaultMouseSpeed, 2
+global MonitorMode := 1 ; 0 - single, 1 - notebook -> 32 2 - notebook ^ 32
 
+#MaxHotkeysPerInterval 99000000
+#HotkeyInterval 99000000
+#KeyHistory 0
+
+ListLines Off
+Process, Priority, , A
+SetBatchLines, -1
+SetKeyDelay, -1, -1
+SetMouseDelay, -1
+SetDefaultMouseSpeed, 0
+SetWinDelay, -1
 
 ;-----------------------------
 
 #NoEnv
-Process, Priority, ,High
 #SingleInstance Force
 
 ;-----------------------------
 
-CapsLock::
+
+F12::
+{
+
+	OpenCloseTaskFrame()
+
+    return
+}
+
+OpenCloseTaskFrame()
 {
 	WinGetClass, m, A
 	ifu := regexmatch(m, "MultitaskingViewFrame")
 	WinGet, current_ID, ID, A
-	if (ifu < 1)
+	;TrayTip, %Locked%, locked, 50
+
+	if (ifu = 0)
 	{
 		SendInput #{Tab}
-		WinWaitNotActive, ahk_id %current_ID%
-		;Sleep, 200
+		;WinWaitNotActive, ahk_id %current_ID%
+		;WinWait, MultitaskingViewFrame
+		Sleep, 100
 		SendInput, {Right}
+		Locked := 0
 	}
 	else
 	{
+	;while (Locked = 1)
+	;{
+		;Sleep, 5
+		;TrayTip, wait, wait, 5
+	;}
 		SendInput, {Enter}
 		MouseToCenterWindow()
 	}
-    return
+	return
 }
 
 *Tab::
@@ -41,7 +71,7 @@ CapsLock::
 	WinGet, current_ID, ID, A
 	if (ifu < 1)
 	{
-		SendInput, {Tab}
+		Send, {Tab}
 	}
 	else
 	{
@@ -51,7 +81,33 @@ CapsLock::
 	return
 }
 
-LShift::
+; alt u - rider to unity and revert
+;LAlt & SC16::
+;{
+;
+;	WinGetTitle, m, A
+;	ifu := regexmatch(m, "JetBrains Rider")
+;	WinGet, current_ID, ID, A
+;	; from unity to rider
+;	if (ifu < 1)
+;	{
+;		WinActivate, Rider
+;		Sleep, 200
+;		MouseToCenterWindow()
+;	}
+;	; from rider to unity
+;	else
+;	{
+;		WinActivate, .unity
+;		Sleep, 200
+;		MouseToCenterWindow()
+;		Sleep, 200
+;		SendInput, {LCtrl Down}{SC19}{LCtrl Up}
+;	}
+;	return
+;}
+
+*LCtrl::
 {
 	SendInput {LAlt Down}{Shift Down}{Shift Up}{LAlt Up}
 	return
@@ -66,15 +122,14 @@ SC35::SendInput,.{Space} ; точка с пробелом
 
 RAlt & SC10::SendInput {Raw}\
 RAlt & SC11::SendInput {Raw}/
-RAlt & SC12::SendInput {{} ;
-RAlt & SC13::SendInput  {}} ;
+RAlt & SC12::SendInput {Raw}{
+RAlt & SC13::SendInput {Raw}} ;
 RAlt & SC14::SendInput {Raw}:
 
-RAlt & SC1E::SendInput "
+RAlt & SC1E::SendInput {Raw}"
 RAlt & SC1F::SendInput {Raw}(
 RAlt & SC20::SendInput {Raw})
 RAlt & SC21::SendInput {Raw};
-RAlt & SC22::SendInput {;}{Enter} ;
 
 RAlt & SC2C::SendInput {Raw}<
 RAlt & SC2D::SendInput {Raw}>
@@ -108,13 +163,29 @@ SC4A::
 	return
 }
 
-; перемещает окно в зависимости от положения мыши
+; отправляет курсор на другой монитор вместо тильды
 SC29::
+{
+	CursorToOtherMonitor()
+	return
+}
+
+
+F11::
+{
+	ToRight()
+	return
+}
+
+SnapWindowToScreen()
 {
 	CoordMode, Mouse, Screen
 	MouseGetPos, XPos, YPos
 	
-	if(YPos < 350)
+	MoveWindowToMouseScreen()
+	Sleep, 100
+
+	if(YPos < 200)
 	{
 		WinMaximize, A
 	}
@@ -125,14 +196,45 @@ SC29::
 			WinMaximize, A
 			Send, #{Left}
 		}
+		else if(XPos < 1920)
+		{
+			WinMaximize, A
+			Send, #{Right}
+		}
+		else if(XPos < 2913)
+		{
+			WinMaximize, A
+			Send, #{Left}
+		}
 		else
 		{
 			WinMaximize, A
 			Send, #{Right}
 		}
 	}
-	
+	return
+}
 
+MoveWindowToMouseScreen()
+{
+	CoordMode, Mouse, Screen
+	MouseGetPos, XPos, YPos
+	WinGetPos, XWin, YWin, , , A
+
+	if(XPos > 1920)
+	{
+		if(XWin < 1880)
+		{
+			SendInput #+{Left}
+		}
+	}
+	else
+	{
+		if(XWin > 1880)
+		{
+			SendInput #+{Left}
+		}
+	}
 	return
 }
 
@@ -140,13 +242,15 @@ SC29::
 SC29 & WheelUp::SendInput {Volume_Up 2}
 SC29 & WheelDown::SendInput {Volume_Down 2}
 
-SC29 & LButton::
+XButton2 & LButton::
 {
-	ToLeft()`
+	CoordMode, Mouse, Screen
+	SendInput {LWin}
+	MouseMove, 993, 500, 5
 	return
 }
 
-SC29 & RButton::
+XButton2 & RButton::
 {
 	ToRight()
 	return
@@ -177,8 +281,22 @@ ActivateWindowUnderMouse()
 	return
 }
 
-; распахивает-возвращает окно
+;win shift 1
 #+SC2::
+{
+	MinimizeMaximize()
+	return
+}
+
+;win shift 2
+#+SC3::
+{
+	ToRight()
+	return
+}
+
+; распахивает-возвращает окно
+MinimizeMaximize()
 {
 	ActivateWindowUnderMouse()
 	MouseToCenterWindow()
@@ -194,37 +312,66 @@ ActivateWindowUnderMouse()
 }
 
 ; закрывает окно
-#+SC3::
+
+
+
+XButton2::
 {
-	ActivateWindowUnderMouse()
-	WinClose, A
+	ToLeft()
+	;SnapWindowToScreen()
 	return
 }
 
-
-; перемещает мышь на другой монитор
-SC135::
+CursorToOtherMonitor()
 {
 	CoordMode, Mouse, Screen
 	MouseGetPos, XPos, YPos
+ 
+	if(MonitorMode = 2)
+	{
+		if(XPos < 100)
+		{
+			XPos := 100
+		}
 	
-	if(XPos < 0)
-	{
-		MouseMove, 900, 500, 5
+		if(YPos > 1440)
+		{
+			MouseMove, XPos, 500, 2
+		}
+		else
+		{
+			MouseMove, XPos, 2000, 2
+		}
 	}
-	else
+	if(MonitorMode = 1)
 	{
-		MouseMove, -900, 500, 5
+		if(XPos < 0)
+		{
+			MouseMove, 1200, 800, 2
+		}
+		else
+		{
+			MouseMove, -900, 800, 2
+		}
 	}
+	else 
+	{
+		MsgBox, error %MonitorMode%
+	}
+
 	return
 }
 
+CapsLock::
+{
+	OpenCloseTaskFrame()
+	OpenCloseTaskFrame()
+	return
+}
 
-
-Shift & CapsLock:: AltTab ;stub
 LCtrl & CapsLock:: AltTab ;stub
 
-LCtrl::SwitchKeysLocale() 
+;LCtrl & CapsLock::SwitchKeysLocale() 
 
 SwitchKeysLocale()
 {

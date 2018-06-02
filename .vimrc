@@ -114,6 +114,8 @@ vnoremap <S-k> kk{j :vsc Edit.WordNext<CR>
 
 nnoremap <S-l> :vsc ReSharper.ReSharper_GotoUsage<CR>
 
+nnoremap : :vsc ReSharper.ReSharper_SilentCleanupCode<CR>
+
 
 " ---------- SHIFT-BOTTOM
 
@@ -123,8 +125,9 @@ vnoremap <S-n> :vsc ReSharper.ReSharper_Generate<CR>
 nnoremap <S-m> :vsc ReSharper.ReSharper_RefactorThis<CR>
 vnoremap <S-m> :vsc ReSharper.ReSharper_RefactorThis<CR>
 
-nnoremap < :vsc File.CloseAllButThis<CR>
-nnoremap > :vsc ReSharper.ReSharper_SilentCleanupCode<CR>
+nnoremap < :vsc Window.PinTab<CR>
+nnoremap > :vsc OtherContextMenus.EasyMDIToolWindow.CloseAllButPinned<CR>
+
 
 
 "-------------------------------------

@@ -1,0 +1,124 @@
+﻿" set novsvim_useeditorindent
+" vsvim_useeditortab
+" set novsvim_controlchars
+" set autoindent
+set noerrorbells
+set novisualbell
+set clipboard=unnamed
+set so=8
+set vsvim_useeditordefaults
+set ignorecase
+set timeoutlen=280
+
+nnoremap <Tab> :action EditorIndentLineOrSelection<CR>
+vnoremap <Tab> :<BS><BS><BS><BS><BS>action EditorIndentSelection<CR>
+
+inoremap <ESC> <ESC>l
+
+" ---------- NORMAL-TOP
+
+nnoremap q :action EditorUnindentSelection<CR>
+vnoremap q :action EditorUnindentSelection<CR>
+
+nnoremap w :action FileStructurePopup<CR>
+
+nnoremap e :action PreviousTab<CR>
+
+nnoremap r :action NextTab<CR>
+
+nnoremap t :action GotoFile<CR>
+
+"nnoremap t :action SaveAll<CR>
+
+nnoremap y :action $Redo<CR>
+
+nnoremap u :action $Undo<CR>
+
+nnoremap [ gg
+vnoremap [ gg
+
+nnoremap ] G
+vnoremap ] G
+
+" ---------- NORMAL-MIDLE
+
+nnoremap a ciw
+
+" nnoremap s s
+
+nnoremap d :action EditorPreviousWordInDifferentHumpsMode<CR>
+vnoremap d :action EditorPreviousWordInDifferentHumpsMode<CR>
+
+nnoremap f :action EditorNextWordInDifferentHumpsMode<CR>
+vnoremap f :action EditorNextWordInDifferentHumpsMode<CR>
+
+nnoremap g :action SmartSelect<CR>
+vnoremap g :action SmartSelect<CR>
+
+nnoremap ; I
+
+nnoremap ' A
+
+" ---------- NORMAL-BOTTOM
+
+nnoremap z dd
+
+vnoremap x x
+
+nnoremap c V
+
+nnoremap b <C-v>
+
+nnoremap n c^
+
+nnoremap m c$
+
+nnoremap , cb 
+
+nnoremap . cw
+
+" ---------- ALT
+
+nnoremap <M-y> qq<Esc>
+
+nnoremap <M-u> @q
+
+" ---------- SHIFT-TOP
+
+nnoremap <S-y> J
+
+nnoremap <S-u> :action CommentByLineComment<CR>
+vnoremap <S-u> :action CommentByLineComment<CR>
+
+nnoremap <S-i> a
+
+
+" ---------- SHIFT-MIDLE
+
+nnoremap <S-h> :action GotoDeclaration<CR>
+
+nnoremap <S-j> jjjjjjjjjj
+
+nnoremap <S-k> kkkkkkkkkk
+
+nnoremap <S-l> :action ShowUsages<CR>
+
+nnoremap : :action SilentCodeCleanup<CR>
+
+
+" ---------- SHIFT-BOTTOM
+
+nnoremap <S-n> :action Generate<CR>
+vnoremap <S-n> :action Generate<CR>
+
+nnoremap <S-m> :action Refactorings.QuickListPopupAction<CR>
+vnoremap <S-m> :action Refactorings.QuickListPopupAction<CR>
+
+nnoremap < :action CloseContent<CR>
+
+nnoremap > :
+vnoremap > :
+
+
+
+"-------------------------------------
