@@ -31,7 +31,6 @@ F12::
 {
 
 	OpenCloseTaskFrame()
-
     return
 }
 
@@ -380,7 +379,6 @@ CursorToOtherMonitor()
 
 CapsLock::
 {
-	OpenCloseTaskFrame()
 	OpenCloseTaskFrame()
 	return
 }

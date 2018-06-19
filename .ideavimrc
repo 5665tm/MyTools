@@ -22,9 +22,10 @@ vnoremap q :action EditorUnindentSelection<CR>
 
 nnoremap w :action FileStructurePopup<CR>
 
-nnoremap e :action PreviousTab<CR>
+nnoremap e :action ShowUsages<CR>
 
-nnoremap r :action NextTab<CR>
+nnoremap r :action RecentFiles<CR>
+vnoremap r 
 
 nnoremap t :action GotoFile<CR>
 
@@ -52,8 +53,7 @@ vnoremap d :action EditorPreviousWordInDifferentHumpsMode<CR>
 nnoremap f :action EditorNextWordInDifferentHumpsMode<CR>
 vnoremap f :action EditorNextWordInDifferentHumpsMode<CR>
 
-nnoremap g :action SmartSelect<CR>
-vnoremap g :action SmartSelect<CR>
+nnoremap g :action GotoDeclaration<CR>
 
 nnoremap ; I
 
@@ -87,21 +87,17 @@ nnoremap <M-u> @q
 
 nnoremap <S-y> J
 
-nnoremap <S-u> :action CommentByLineComment<CR>
-vnoremap <S-u> :action CommentByLineComment<CR>
+nnoremap <S-u> :action RenameElement<CR>
 
 nnoremap <S-i> a
 
 
 " ---------- SHIFT-MIDLE
 
-nnoremap <S-h> :action GotoDeclaration<CR>
 
 nnoremap <S-j> jjjjjjjjjj
 
 nnoremap <S-k> kkkkkkkkkk
-
-nnoremap <S-l> :action ShowUsages<CR>
 
 nnoremap : :action SilentCodeCleanup<CR>
 

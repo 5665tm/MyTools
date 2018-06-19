@@ -31,7 +31,6 @@ F12::
 {
 
 	OpenCloseTaskFrame()
-
     return
 }
 
@@ -381,6 +380,12 @@ CursorToOtherMonitor()
 CapsLock::
 {
 	OpenCloseTaskFrame()
+	return
+}
+
+; numpad add
+SC4E::
+{
 	OpenCloseTaskFrame()
 	return
 }
