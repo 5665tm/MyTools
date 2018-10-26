@@ -195,7 +195,12 @@ SC56 & SC2F::SendInput {Raw}]
 +scA::SendInput  {Raw}$
 
 MouseToCenterWindow()
-{ 
+{
+	;WinGetClass, m, A
+	;ifu := regexmatch(m, "MultitaskingViewFrame")
+	;mfu := m == ""
+	;MsgBox, %m%
+	
 	CoordMode, Mouse, Window
 	Sleep, 80
 	WinID := WinExist("A")
@@ -567,6 +572,71 @@ SwitchLocale(Layout)
 ;------------------------------------------------------------------
 ;------------------------------------------------------------------
 ;------------------------------------------------------------------
+
+SC4F::
+{
+	Send, #1
+	MouseToCenterWindow()
+	return
+}
+
+SC50::
+{
+	Send, #2
+	MouseToCenterWindow()
+	return
+}
+
+SC51::
+{
+	Send, #3
+	MouseToCenterWindow()
+	return
+}
+
+SC4B::
+{
+	Send, #4
+	MouseToCenterWindow()
+	return
+}
+
+SC4C::
+{
+	Send, #5
+	MouseToCenterWindow()
+	return
+}
+
+SC4D::
+{
+	Send, #6
+	MouseToCenterWindow()
+	return
+}
+
+SC47::
+{
+	Send, #7
+	MouseToCenterWindow()
+	return
+}
+
+SC48::
+{
+	Send, #8
+	MouseToCenterWindow()
+	return
+}
+
+SC49::
+{
+	Send, #9
+	MouseToCenterWindow()
+	return
+}
+
+
 
 ;SetEng()
 ;{
