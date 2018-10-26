@@ -26,13 +26,27 @@ SetWinDelay, -1
 
 ;-----------------------------
 
-
-F12::
-{
-
-	OpenCloseTaskFrame()
-    return
+; запоминает очередь открытых окон
+loop
+{	
+	WinGetClass, m, A
+	ifu := regexmatch(m, "MultitaskingViewFrame")
+	mfu := m == ""
+	WinGet, current_ID, ID, A
+	
+	;MsgBox, hi
+	
+	WinWaitNotActive, ahk_id %current_ID%
+	;TrayTip, Title, %m% %ifu% %mfu% %current_ID%, 1, 1
+	if (ifu < 1)
+	{
+		if(mfu < 1)
+		{
+			previous_ID := current_ID
+		}
+	}
 }
+
 
 OpenCloseTaskFrame()
 {
@@ -106,12 +120,33 @@ OpenCloseTaskFrame()
 ;	return
 ;}
 
-*LCtrl::
+*RShift::
 {
-	SendInput {LAlt Down}{Shift Down}{Shift Up}{LAlt Up}
+	ToRight()
+	return
+}
+RShift & CapsLock:: AltTab ; stub
+
+*RCtrl::
+{
+	ToLeft()
+	return
+}
+RCtrl & CapsLock:: AltTab ; stub
+
+; alt and \
+RAlt::
+{
+	OpenCloseTaskFrame()
 	return
 }
 
+SC56::
+{
+	OpenCloseTaskFrame()
+	return
+}
+	
 ;*****************************************************
 ; Доработка раскладки
 ;*****************************************************
@@ -185,7 +220,6 @@ SC29::
 	return
 }
 
-
 F11::
 {
 	ToRight()
@@ -252,10 +286,6 @@ MoveWindowToMouseScreen()
 	}
 	return
 }
-
-; sc135 - num
-SC29 & WheelUp::SendInput {Volume_Up 2}
-SC29 & WheelDown::SendInput {Volume_Down 2}
 
 XButton2 & LButton::
 {
@@ -333,7 +363,6 @@ MinimizeMaximize()
 XButton2::
 {
 	ToLeft()
-	;SnapWindowToScreen()
 	return
 }
 
@@ -377,20 +406,49 @@ CursorToOtherMonitor()
 	return
 }
 
-CapsLock::
+; numpad add
+VK6B::
 {
-	OpenCloseTaskFrame()
+	Send {WheelUp 1}
 	return
 }
 
-; numpad add
-SC4E::
+SC11C::
+{
+	Send {WheelDown 1}
+	return
+}
+
+; Numpad0
+SC52::
 {
 	OpenCloseTaskFrame()
-	return
+    return
+}
+
+; Numpad.
+SC53::
+{
+	ToRight()
+    return
+}
+
+
+; F12
+SC58::
+{
+	OpenCloseTaskFrame()
+    return
 }
 
 LCtrl & CapsLock:: AltTab ;stub
+
+; capslock
+SC3A::
+{
+	SendInput {LAlt Down}{Shift Down}{Shift Up}{LAlt Up}
+    return
+}
 
 ;LCtrl & CapsLock::SwitchKeysLocale() 
 
@@ -510,26 +568,6 @@ SwitchLocale(Layout)
 ;------------------------------------------------------------------
 ;------------------------------------------------------------------
 
-; запоминает очередь открытых окон
-;loop 
-;{	
-;	WinGetClass, m, A
-;	ifu := regexmatch(m, "MultitaskingViewFrame")
-;	mfu := m == ""
-;	WinGet, current_ID, ID, A
-;	
-;	WinWaitNotActive, ahk_id %current_ID%
-;	;TrayTip, Title, %m% %ifu% %mfu% %current_ID%, 1, 1
-;	if (ifu < 1)
-;	{ 	
-;		if(mfu < 1)
-;		{
-;			previous_ID := current_ID
-;		}
-;	}
-;}
-
-
 ;SetEng()
 ;{
 ;en := DllCall("LoadKeyboardLayout", "Str", "00000409", "Int", 1)
@@ -552,11 +590,11 @@ SwitchLocale(Layout)
 
 
 ; возвращает последнее открое окно по аналогии с альт-таб
-;SC135::
-;{
-;	WinActivate ahk_id %previous_ID%
-;	MouseToCenterWindow()
-;}
+*LCtrl::
+{
+	WinActivate ahk_id %previous_ID%
+	MouseToCenterWindow()
+}
 
 
 ;$MButton::
