@@ -52,11 +52,11 @@ nnoremap a ciw
 
 " nnoremap s s
 
-nnoremap d :vsc Edit.WordPrevious<CR>
-vnoremap d :vsc Edit.WordPrevious<CR>
+nnoremap d b
+vnoremap d b
 
-nnoremap f :vsc Edit.WordNext<CR>
-vnoremap f :vsc Edit.WordNext<CR>
+nnoremap f w
+vnoremap f w
 
 nnoremap g :vsc ReSharper.ReSharper_ExtendSelection<CR>
 vnoremap g :vsc ReSharper.ReSharper_ExtendSelection<CR>
@@ -114,8 +114,6 @@ vnoremap <S-k> kk{j :vsc Edit.WordNext<CR>
 
 nnoremap <S-l> :vsc ReSharper.ReSharper_GotoUsage<CR>
 
-nnoremap : :vsc ReSharper.ReSharper_SilentCleanupCode<CR>
-
 
 " ---------- SHIFT-BOTTOM
 
@@ -125,9 +123,8 @@ vnoremap <S-n> :vsc ReSharper.ReSharper_Generate<CR>
 nnoremap <S-m> :vsc ReSharper.ReSharper_RefactorThis<CR>
 vnoremap <S-m> :vsc ReSharper.ReSharper_RefactorThis<CR>
 
-nnoremap < :vsc Window.PinTab<CR>
-nnoremap > :vsc OtherContextMenus.EasyMDIToolWindow.CloseAllButPinned<CR>
-
+nnoremap < :vsc File.CloseAllButThis<CR>
+nnoremap > :vsc ReSharper.ReSharper_SilentCleanupCode<CR>
 
 
 "-------------------------------------

@@ -47,11 +47,11 @@ nnoremap a ciw
 
 " nnoremap s s
 
-nnoremap d :action EditorPreviousWordInDifferentHumpsMode<CR>
-vnoremap d :action EditorPreviousWordInDifferentHumpsMode<CR>
+nnoremap d b
+vnoremap d b
 
-nnoremap f :action EditorNextWordInDifferentHumpsMode<CR>
-vnoremap f :action EditorNextWordInDifferentHumpsMode<CR>
+nnoremap f w
+vnoremap f w
 
 nnoremap g :action GotoDeclaration<CR>
 
